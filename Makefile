@@ -16,6 +16,9 @@ runwordpress:
 ls :
 	docker compose ps -a
 
+logs :
+	docker compose logs
+
 down :
 	docker compose down
 
@@ -30,7 +33,8 @@ clean :
 # run mariadb: mariadbd
 # mysql -u root -p
 # run nginx: nginx
+# CREATE USER 'mvillarr'@'localhost' IDENTIFIED BY '1234';
 # CREATE DATABASE wordpress;
 # GRANT ALL PRIVILEGES ON wordpress . * TO 'mvillarr'@'localhost';
-# CREATE USER 'mvillarr'@'localhost' IDENTIFIED BY '1234';
 # FLUSH PRIVILEGES;
+#1. tourner mariadb avec, mariadbd, puis lancer mysql dans une autre console, 
