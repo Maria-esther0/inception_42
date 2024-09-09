@@ -14,8 +14,8 @@ services:
     #  MARIADB_USER: user_name
     #  MARIADB_PASSWORD: user_pass
     #restart: always
-    #networks:
-    #  - back_end
+    networks:
+     - back_end
   wordpress:
     image: wordpress:php7.3-fpm-alpine
     volumes:
