@@ -1,46 +1,58 @@
 services:
   mariadb:
-    image: mariadb
-    volumes:
-      - ~/Desktop/mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: mysql_root_pass
-      MYSQL_DATABASE: db_name
-      MYSQL_USER: user_name
-      MYSQL_PASSWORD: user_pass
-    restart: always
+    build : ./mariadb/
+
+    stdin_open: true
+    tty: true
+
+    #image: mariadb
+    #volumes:
+    #  - ~/Desktop/mysql:/var/lib/mysql
+    #environment:
+    #  MARIADB_ROOT_PASSWORD: mysql_root_pass
+    #  MARIADB_DATABASE: db_name
+    #  MARIADB_USER: user_name
+    #  MARIADB_PASSWORD: user_pass
+    #restart: always
+    #networks:
+    #  - back_end
   wordpress:
     image: wordpress:php7.3-fpm-alpine
     volumes:
       - ~/Desktop/html:/var/www/html
-    depends_on:
-      - mariadb
     environment:
-      WORDPRESS_DB_HOST: mysql
-      MYSQL_ROOT_PASSWORD: mysql_root_pass
+      WORDPRESS_DB_HOST: mariadb
+      MARIADB_ROOT_PASSWORD: mysql_root_pass
       WORDPRESS_DB_NAME: db_name
       WORDPRESS_DB_USER: user_name
       WORDPRESS_DB_PASSWORD: user_pass
       WORDPRESS_TABLE_PREFIX: wp_
-    links:
-      - mariadb
     restart: always
+    networks:
+      - front_end
+      - back_end
+    depends_on:
+      - mariadb
   nginx:
     build: ./nginx/
-    stdin_open: true
-    tty: true
     ports:
     - 8080:80
-
+    volumes:
+    - ~/Desktop/html:/var/www/html
+    networks:
+      - front_end
+    depends_on:
+      - wordpress
 
     #ports: "8000:9000"
     #image:
-
     #image: nginx:alpine
     #volumes:
      # - ./nginx:/etc/nginx/conf.d
       #- ~/Desktop/html:/var/www/html
     #ports:
     #  - 8080:80
-    #links:
-     # - wordpress
+
+networks:
+  front_end:
+  back_end:

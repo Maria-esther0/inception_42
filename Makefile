@@ -4,6 +4,9 @@ run :
 
 	docker compose up -d --build
 
+runmdb:
+	docker compose exec mariadb bash
+
 runnginx:
 	docker compose exec nginx bash
 
