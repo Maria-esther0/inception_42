@@ -2,7 +2,7 @@ services:
   mariadb:
     build : ./mariadb/
     volumes:
-     - ~/Desktop/mysql:/var/lib/mysql
+     - ~/Desktop/data/mysql:/var/lib/mysql
     networks:
      - back_end
     env_file:
@@ -12,7 +12,7 @@ services:
   wordpress:
     build: ./wordpress/
     volumes:
-      - ~/Desktop/html:/var/www/html
+      - ~/Desktop/data/html:/var/www/html
     networks:
       - front_end
       - back_end
@@ -27,7 +27,7 @@ services:
     ports:
     - 8080:443
     volumes:
-    - ~/Desktop/html:/var/www/html
+    - ~/Desktop/data/html:/var/www/html
     networks:
       - front_end
     depends_on:

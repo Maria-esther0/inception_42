@@ -24,7 +24,7 @@ down :
 
 clean :
 	docker compose down --volumes
-	docker run --rm -v "~/Desktop:/pwd" busybox rm -rf /pwd/html /pwd/mysql
+	docker run --rm -v "$(HOME)/Desktop/data:/pwd" busybox rm -rf /pwd/html /pwd/mysql
 
 .PHONY = run ls down clean
 

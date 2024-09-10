@@ -1,3 +1,5 @@
+chmod 777 /var/lib/mysql
+chown -R mysql:mysql /var/lib/mysql
 mariadbd &
 
 sleep 5;
