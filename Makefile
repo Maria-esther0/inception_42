@@ -2,29 +2,29 @@ name = inception
 
 run :
 
-	docker compose up -d --build
+	docker compose -f ./srcs/docker-compose.yml up -d --build
 
 runmdb:
-	docker compose exec mariadb bash
+	docker compose -f ./srcs/docker-compose.yml exec mariadb bash
 
 runnginx:
-	docker compose exec nginx bash
+	docker compose -f ./srcs/docker-compose.yml exec nginx bash
 
 runwordpress:
-	docker compose exec wordpress bash
+	docker compose -f ./srcs/docker-compose.yml exec wordpress bash
 
 ls :
-	docker compose ps -a
+	docker compose -f ./srcs/docker-compose.yml ps -a
 
 logs :
-	docker compose logs
+	docker compose -f ./srcs/docker-compose.yml logs
 
 down :
-	docker compose down
+	docker compose -f ./srcs/docker-compose.yml down
 
 clean :
-	docker compose down --volumes
-	docker run --rm -v "$(HOME)/Desktop/data:/pwd" busybox rm -rf /pwd/html /pwd/mysql
+	docker compose -f ./srcs/docker-compose.yml down --volumes
+	docker run --rm -v "$(HOME)/data:/pwd" busybox rm -rf /pwd/html /pwd/mysql
 
 .PHONY = run ls down clean
 

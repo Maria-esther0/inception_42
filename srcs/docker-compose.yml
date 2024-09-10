@@ -2,32 +2,32 @@ services:
   mariadb:
     build : ./mariadb/
     volumes:
-     - ~/Desktop/data/mysql:/var/lib/mysql
+     - ~/data/mysql:/var/lib/mysql
     networks:
      - back_end
     env_file:
-      - .env
+      - ../.env
     restart: on-failure
 
   wordpress:
     build: ./wordpress/
     volumes:
-      - ~/Desktop/data/html:/var/www/html
+      - ~/data/html:/var/www/html
     networks:
       - front_end
       - back_end
     depends_on:
       - mariadb
     env_file:
-      - .env
+      - ../.env
     restart: on-failure
 
   nginx:
     build: ./nginx/
     ports:
-    - 8080:443
+    - 443:443
     volumes:
-    - ~/Desktop/data/html:/var/www/html
+    - ~/data/html:/var/www/html
     networks:
       - front_end
     depends_on:
