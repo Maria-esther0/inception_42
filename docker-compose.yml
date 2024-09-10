@@ -1,58 +1,38 @@
 services:
   mariadb:
     build : ./mariadb/
-
-    stdin_open: true
-    tty: true
-
-    #image: mariadb
-    #volumes:
-    #  - ~/Desktop/mysql:/var/lib/mysql
-    #environment:
-    #  MARIADB_ROOT_PASSWORD: mysql_root_pass
-    #  MARIADB_DATABASE: db_name
-    #  MARIADB_USER: user_name
-    #  MARIADB_PASSWORD: user_pass
-    #restart: always
+    volumes:
+     - ~/Desktop/mysql:/var/lib/mysql
     networks:
      - back_end
+    env_file:
+      - .env
+    restart: on-failure
+
   wordpress:
-    image: wordpress:php7.3-fpm-alpine
+    build: ./wordpress/
     volumes:
       - ~/Desktop/html:/var/www/html
-    environment:
-      WORDPRESS_DB_HOST: mariadb
-      MARIADB_ROOT_PASSWORD: mysql_root_pass
-      WORDPRESS_DB_NAME: db_name
-      WORDPRESS_DB_USER: user_name
-      WORDPRESS_DB_PASSWORD: user_pass
-      WORDPRESS_TABLE_PREFIX: wp_
-    restart: always
     networks:
       - front_end
       - back_end
     depends_on:
       - mariadb
+    env_file:
+      - .env
+    restart: on-failure
+
   nginx:
     build: ./nginx/
     ports:
-    - 8080:80
+    - 8080:443
     volumes:
     - ~/Desktop/html:/var/www/html
     networks:
       - front_end
     depends_on:
       - wordpress
-
-    #ports: "8000:9000"
-    #image:
-    #image: nginx:alpine
-    #volumes:
-     # - ./nginx:/etc/nginx/conf.d
-      #- ~/Desktop/html:/var/www/html
-    #ports:
-    #  - 8080:80
-
+    restart: on-failure
 networks:
   front_end:
   back_end:

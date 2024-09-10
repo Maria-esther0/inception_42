@@ -2,10 +2,11 @@ mariadbd &
 
 sleep 5;
 
-mysql -u root -e "CREATE USER 'user_name'@'%' IDENTIFIED BY 'user_pass';"
-mysql -u root -e "CREATE DATABASE db_name;"
-mysql -u root -e "GRANT ALL PRIVILEGES ON db_name . * TO 'user_name'@'%';"
+mysql -u root -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
+mysql -u root -e "CREATE DATABASE $DB_DATABASE;"
+mysql -u root -e "GRANT ALL PRIVILEGES ON $DB_DATABASE . * TO '$DB_USER'@'%';"
 mysql -u root -e "FLUSH PRIVILEGES;"
+mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
 
 pkill mariadbd
 

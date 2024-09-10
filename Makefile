@@ -24,6 +24,7 @@ down :
 
 clean :
 	docker compose down --volumes
+	docker run --rm -v "~/Desktop:/pwd" busybox rm -rf /pwd/html /pwd/mysql
 
 .PHONY = run ls down clean
 
@@ -35,6 +36,7 @@ clean :
 # run nginx: nginx
 # CREATE USER 'mvillarr'@'localhost' IDENTIFIED BY '1234';
 # CREATE DATABASE wordpress;
+#afficher tous les user (mysql): SELECT user FROM mysql.user;
 # GRANT ALL PRIVILEGES ON wordpress . * TO 'mvillarr'@'localhost';
 # FLUSH PRIVILEGES;
 #1. tourner mariadb avec, mariadbd, puis lancer mysql dans une autre console, 
